@@ -1,0 +1,252 @@
+html, body { background: transparent; }
+
+.controls {
+  position: absolute;
+  inset: 0;
+  color: #fff;
+  user-select: none;
+}
+
+/* --------------------------------------------- 渐进式进度条 --- */
+/*
+  静止：3px 极细 + 半透明，不抢画面；
+  靠近/拖动：平滑变粗到 8px，滑块从 0 淡入成一个白色小圆点。
+*/
+.scrub {
+  position: absolute;
+  left: 20px;
+  right: 20px;
+  top: 80px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  cursor: default;
+}
+
+.scrub-line {
+  position: relative;
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.26);
+  overflow: hidden;
+  transition: height 220ms var(--ease-apple), background-color 220ms var(--ease-out);
+}
+
+.scrub-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0%;
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: 2px;
+}
+
+.scrub-knob {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 12px;
+  height: 12px;
+  margin: -6px 0 0 -6px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 160ms var(--ease-out), transform 220ms var(--ease-apple);
+  pointer-events: none;
+}
+
+/* 悬停或拖动时：变粗 + 淡入滑块 */
+.scrub:hover .scrub-line,
+.scrub.active .scrub-line {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.32);
+}
+.scrub:hover .scrub-knob,
+.scrub.active .scrub-knob {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* ------------------------------------------------- 悬浮胶囊 --- */
+.pill {
+  position: absolute;
+  left: 50%;
+  bottom: 58px;
+  transform: translateX(-50%);
+  display: grid;
+  /* 三栏：左右各占一份 → 中间播控区永远居中 */
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  height: 52px;
+  /* 窗口可以缩得很小，胶囊不能撑破窗口 */
+  min-width: min(520px, calc(100% - 24px));
+  max-width: calc(100% - 32px);
+  padding: 0 14px;
+  border-radius: 26px;
+  /* 材质本身放在独立的 ::before 图层：
+     按钮的 hover/active 重绘时不会让这层重新计算背景模糊 */
+  background: transparent;
+  isolation: isolate;
+}
+
+.pill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 26px;
+  background: rgba(20, 20, 20, 0.55);
+  -webkit-backdrop-filter: blur(28px) saturate(190%);
+  backdrop-filter: blur(28px) saturate(190%);
+  box-shadow: inset 0 0 0 0.5px rgba(255, 255, 255, 0.15),
+    0 8px 26px rgba(0, 0, 0, 0.34);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* 交互控件全部在材质层之上，且只做局部重绘 */
+.pill > * { position: relative; z-index: 1; }
+
+/* 窗口很小时按优先级让位：先收时间码，再收音量，保证播控区不重叠 */
+@media (max-width: 620px) {
+  .zone.left .time { display: none; }
+  .pill { gap: 8px; }
+}
+@media (max-width: 480px) {
+  .zone.left { display: none; }
+  .ctl.play { width: 34px; height: 34px; }
+  .ctl.wing { width: 24px; height: 24px; }
+}
+@media (max-width: 300px) {
+  .zone.right { display: none; }
+  .ctl.wing { display: none; }
+}
+
+.zone {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  min-width: 0;
+}
+.zone.left { justify-content: flex-start; }
+.zone.center { justify-content: center; gap: 6px; }
+.zone.right { justify-content: flex-end; }
+
+/* ------------------------------ 按键 ------------------------------ */
+.ctl {
+  width: 32px;
+  height: 32px;
+  flex: none;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.86);
+  transition: background-color 150ms var(--ease-out),
+    color 150ms var(--ease-out), transform 150ms var(--ease-apple);
+}
+.ctl:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+/* 按下态也只改局部背景：不用 transform，避免整块磨砂层重新合成 */
+.ctl:active { background: rgba(255, 255, 255, 0.24); }
+.ctl.on { color: var(--accent); }
+.ctl .icon { width: 18px; height: 18px; }
+
+/* 主键明显大于两翼（QuickTime / Apple TV 的层级规范） */
+.ctl.play { width: 40px; height: 40px; border-radius: 22px; }
+.ctl.play .icon { width: 22px; height: 22px; }
+.ctl.wing { width: 28px; height: 28px; }
+.ctl.wing .icon { width: 20px; height: 20px; }
+.ctl.wing.holding {
+  background: rgba(255, 255, 255, 0.24);
+  color: #fff;
+}
+
+/* 倍速：苹果喜欢用极简字符而不是图标。
+   固定宽度 + 等宽数字：档位在 0.5x~2.0x 之间切换时按钮宽度不抖 */
+.ctl.speed {
+  width: 50px;
+  min-width: 50px;
+  padding: 0 4px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+  letter-spacing: 0.2px;
+}
+.ctl.speed.modified { color: var(--accent); }
+
+/* 时间码：点击在「已播/总长」与「剩余倒计时」之间切换 */
+.time {
+  height: 26px;
+  padding: 0 8px;
+  border-radius: 7px;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: rgba(255, 255, 255, 0.82);
+  white-space: nowrap;
+  transition: background-color 150ms var(--ease-out), color 150ms var(--ease-out);
+}
+.time:hover { background: rgba(255, 255, 255, 0.14); color: #fff; }
+.time .t-sep { margin: 0 3px; opacity: 0.55; }
+
+/* --------------------- 音量：悬停平滑展开胶囊滑块 --------------------- */
+.volwrap {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.slider.vol {
+  position: relative;
+  height: 22px;
+  width: 0;               /* 静止时收拢 */
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  transition: width 260ms var(--ease-apple), opacity 200ms var(--ease-out);
+}
+/* 悬停在音量区、或正在拖动时才展开 */
+.volwrap:hover .slider.vol,
+.volwrap.dragging .slider.vol,
+.slider.vol.dragging {
+  width: 64px;
+  opacity: 1;
+}
+
+.vol .track {
+  position: relative;
+  width: 100%;
+  height: 4px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  overflow: hidden;
+}
+.vol .fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0%;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 2px;
+}
+.vol .knob {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  border-radius: 50%;
+  background: #fff;
+  opacity: 0;
+  transition: opacity 140ms var(--ease-out);
+  pointer-events: none;
+}
+.slider.vol:hover .knob, .slider.vol.dragging .knob { opacity: 1; }

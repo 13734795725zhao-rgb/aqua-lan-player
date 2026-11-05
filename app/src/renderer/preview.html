@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <title>preview</title>
+  <link rel="stylesheet" href="shared/base.css" />
+  <link rel="stylesheet" href="preview.css" />
+</head>
+<body>
+  <!--
+    悬停缩略图：
+    上方 200x113 那块是「透明洞口」，真正的画面是挂在这个窗口里的
+    第三个 libmpv 实例的原生子窗口，由它 GPU 解码出对应时间的那一帧。
+    下方是圆角时间码标签。
+  -->
+  <div class="frame" id="frame">
+    <div class="hole"></div>
+    <div class="label" id="label">0:00</div>
+  </div>
+
+  <script src="shared/icons.js"></script>
+  <script src="preview.js"></script>
+</body>
+</html>

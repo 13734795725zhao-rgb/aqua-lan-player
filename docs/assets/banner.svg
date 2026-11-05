@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="320" viewBox="0 0 1280 320" role="img" aria-label="AQUA — a host-embedded local video player for Windows">
+  <defs>
+    <linearGradient id="band" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#0EA5E9"/>
+      <stop offset="0.5" stop-color="#22D3EE"/>
+      <stop offset="1" stop-color="#6366F1"/>
+    </linearGradient>
+    <linearGradient id="wordmark" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#F0FDFF"/>
+      <stop offset="0.55" stop-color="#A5F3FC"/>
+      <stop offset="1" stop-color="#38BDF8"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0.04"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="24%" cy="-14%" r="92%">
+      <stop offset="0" stop-color="#0EA5E9" stop-opacity="0.30"/>
+      <stop offset="0.55" stop-color="#0C4A6E" stop-opacity="0.09"/>
+      <stop offset="1" stop-color="#050D14" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="94%" cy="116%" r="76%">
+      <stop offset="0" stop-color="#22D3EE" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#050D14" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1280" height="320" fill="#050D14"/>
+  <rect width="1280" height="320" fill="url(#glow)"/>
+  <rect width="1280" height="320" fill="url(#glow2)"/>
+  <rect x="0" y="0" width="1280" height="3" fill="url(#band)" opacity="0.95"/>
+
+  <text x="88" y="90"
+        font-family="'Segoe UI', Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif"
+        font-size="12.5" font-weight="600" letter-spacing="3.4" fill="#67E8F9">HOST-EMBEDDED VIDEO PLAYER</text>
+
+  <text x="86" y="170"
+        font-family="'Segoe UI', Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif"
+        font-size="92" font-weight="700" letter-spacing="-2.5" fill="url(#wordmark)">AQUA</text>
+
+  <text x="92" y="212"
+        font-family="'Segoe UI', Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif"
+        font-size="19" fill="#9FB6CC">A native-feeling local video library for Windows.</text>
+
+  <text x="92" y="240"
+        font-family="'Segoe UI', Inter, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif"
+        font-size="19" fill="#9FB6CC">Electron shell, libmpv core, real acrylic glass.</text>
+
+  <g font-family="'Cascadia Code', Consolas, ui-monospace, SFMono-Regular, Menlo, monospace"
+     font-size="13.5" fill="#4A6480">
+    <text x="92" y="284">Electron</text>
+    <text x="194" y="284">libmpv</text>
+    <text x="284" y="284">koffi FFI</text>
+    <text x="392" y="284">Win32</text>
+    <text x="474" y="284">MIT</text>
+  </g>
+
+  <!-- abstract player window: sidebar + video stage -->
+  <g>
+    <rect x="768" y="62" width="432" height="212" rx="16" fill="url(#glass)"
+          stroke="#FFFFFF" stroke-opacity="0.16" stroke-width="1.2"/>
+
+    <!-- traffic lights -->
+    <circle cx="792" cy="80" r="4" fill="#FFFFFF" opacity="0.32"/>
+    <circle cx="808" cy="80" r="4" fill="#FFFFFF" opacity="0.22"/>
+    <circle cx="824" cy="80" r="4" fill="#FFFFFF" opacity="0.16"/>
+
+    <!-- sidebar -->
+    <rect x="780" y="94" width="104" height="168" rx="10" fill="#FFFFFF" opacity="0.07"/>
+    <g fill="#67E8F9" opacity="0.85">
+      <rect x="792" y="106" width="62" height="7" rx="3.5"/>
+    </g>
+    <g fill="#FFFFFF" opacity="0.26">
+      <rect x="792" y="126" width="78" height="6" rx="3"/>
+      <rect x="792" y="144" width="66" height="6" rx="3"/>
+      <rect x="792" y="162" width="74" height="6" rx="3"/>
+      <rect x="792" y="180" width="58" height="6" rx="3"/>
+      <rect x="792" y="198" width="70" height="6" rx="3"/>
+    </g>
+
+    <!-- video stage -->
+    <rect x="896" y="94" width="292" height="168" rx="10" fill="#0A1A26"/>
+    <g opacity="0.9">
+      <circle cx="1042" cy="178" r="30" fill="none" stroke="#38BDF8" stroke-opacity="0.55" stroke-width="2"/>
+      <path d="M1033 163 L 1058 178 L 1033 193 Z" fill="#38BDF8" fill-opacity="0.85"/>
+    </g>
+
+    <!-- bottom control pill -->
+    <rect x="932" y="216" width="220" height="26" rx="13" fill="#FFFFFF" opacity="0.10"/>
+    <rect x="986" y="227" width="112" height="4" rx="2" fill="#FFFFFF" opacity="0.24"/>
+    <rect x="986" y="227" width="44" height="4" rx="2" fill="#22D3EE" opacity="0.9"/>
+  </g>
+
+  <rect x="0" y="317" width="1280" height="1" fill="#FFFFFF" opacity="0.06"/>
+</svg>

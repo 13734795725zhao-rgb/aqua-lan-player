@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <title>视频播放器</title>
+  <link rel="stylesheet" href="shared/base.css" />
+  <link rel="stylesheet" href="shell.css" />
+</head>
+<body>
+  <!-- 统一标题栏：与内容区不做一刀切的分割线，左上保留 macOS 交通灯 -->
+  <header class="titlebar" id="titlebar">
+    <div class="lights" id="lights">
+      <button class="light close" data-act="close" title="关闭"></button>
+      <button class="light min" data-act="min" title="最小化"></button>
+      <button class="light max" data-act="max" title="最大化"></button>
+    </div>
+
+    <div class="title" id="title">视频播放器</div>
+
+    <div class="actions">
+      <button class="tb-btn" id="btn-theme" title="外观"></button>
+      <button class="tb-btn" id="btn-sidebar" title="侧边栏 (Ctrl+B)"></button>
+      <button class="tb-btn" id="btn-pip" title="画中画 (Ctrl+P)"></button>
+      <button class="tb-btn" id="btn-fs" title="全屏 (F)"></button>
+    </div>
+  </header>
+
+  <!-- 视频承载区：真正的画面是盖在这上面的原生子窗口 -->
+  <div class="stage" id="stage"></div>
+
+  <script src="shared/icons.js"></script>
+  <script src="shared/hotkeys.js"></script>
+  <script src="shell.js"></script>
+</body>
+</html>

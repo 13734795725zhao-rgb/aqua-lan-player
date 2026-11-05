@@ -1,0 +1,40 @@
+# ---- mpv source tree (third-party checkout, ~173 MB) ----
+# Anchored with a leading slash on purpose: app/src/ is OUR code and must stay
+# tracked. Only the top-level mpv checkout is excluded.
+/src/
+
+# ---- mpv runtime binaries (third-party, ~167 MB) ----
+# Drop a 64-bit libmpv build here to run the app. See README "Prerequisites".
+/bin/
+
+# ---- Build output ----
+/app/dist/
+/app/build/
+dist/
+out/
+
+# ---- Node ----
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# ---- Runtime logs and debug captures ----
+*.log
+app/ov*.png
+
+# ---- Sample media (not redistributable) ----
+测试视频/
+
+# ---- Editor / OS ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+
+# ---- AI tooling scratch dirs (never publish) ----
+.agent/
+.workbuddy/
+.ai-memory/
+.claude/

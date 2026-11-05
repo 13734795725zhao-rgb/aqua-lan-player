@@ -1,0 +1,116 @@
+/* 苹果风格设计变量 + 全局重置（四个窗口共用） */
+
+:root {
+  --title-h: 52px;
+  --ease-apple: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --radius-row: 10px;
+  --radius-btn: 8px;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI Variable",
+    "Segoe UI", "Microsoft YaHei UI", "Microsoft YaHei", system-ui, sans-serif;
+}
+
+/* 暗色材质（默认） */
+:root[data-theme='dark'] {
+  --material: rgba(30, 30, 32, 0.58);   /* 叠在系统磨砂之上的着色，决定材质明暗 */
+  --panel: rgba(26, 26, 28, 0.92);      /* 磨砂不可用时的降级底色 */
+  --shell-bg: #1b1b1d;
+  --text: rgba(255, 255, 255, 0.92);
+  --text-dim: rgba(255, 255, 255, 0.55);
+  --text-faint: rgba(255, 255, 255, 0.34);
+  --separator: rgba(255, 255, 255, 0.09);
+  --hover: rgba(255, 255, 255, 0.07);
+  --active: rgba(255, 255, 255, 0.13);
+  --capsule: rgba(255, 255, 255, 0.10);
+  --capsule-hover: rgba(255, 255, 255, 0.16);
+  --accent: #0a84ff;
+  --on-accent: #fff;
+  --track: rgba(255, 255, 255, 0.16);
+  --thumb: rgba(255, 255, 255, 0.42);
+  --shadow: 0 10px 34px rgba(0, 0, 0, 0.45);
+  --badge-a: #3a3a3f;
+  --badge-b: #232327;
+}
+
+/* 浅色材质 */
+:root[data-theme='light'] {
+  --material: rgba(247, 247, 249, 0.62);
+  --panel: rgba(243, 243, 245, 0.94);
+  --shell-bg: #ececec;
+  --text: rgba(0, 0, 0, 0.86);
+  --text-dim: rgba(0, 0, 0, 0.48);
+  --text-faint: rgba(0, 0, 0, 0.32);
+  --separator: rgba(0, 0, 0, 0.09);
+  --hover: rgba(0, 0, 0, 0.05);
+  --active: rgba(0, 0, 0, 0.085);
+  --capsule: rgba(0, 0, 0, 0.06);
+  --capsule-hover: rgba(0, 0, 0, 0.10);
+  --accent: #007aff;
+  --on-accent: #fff;
+  --track: rgba(0, 0, 0, 0.12);
+  --thumb: rgba(0, 0, 0, 0.34);
+  --shadow: 0 10px 34px rgba(0, 0, 0, 0.18);
+  --badge-a: #ffffff;
+  --badge-b: #e9e9ee;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;
+  background: transparent;
+}
+
+body {
+  font-family: var(--font);
+  font-size: 13px;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  user-select: none;
+  cursor: default;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  border: 0;
+  padding: 0;
+  background: none;
+  cursor: default;
+}
+
+input {
+  font: inherit;
+  color: inherit;
+}
+
+.icon {
+  width: 16px;
+  height: 16px;
+  display: block;
+}
+
+/* 统一的图标按钮（macOS 工具栏风格） */
+.tb-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  display: grid;
+  place-items: center;
+  color: var(--text-dim);
+  transition: background-color 160ms var(--ease-out), color 160ms var(--ease-out);
+}
+.tb-btn:hover { background: var(--hover); color: var(--text); }
+.tb-btn:active { background: var(--active); }
+.tb-btn.on { background: var(--capsule-hover); color: var(--accent); }
+.tb-btn .icon { width: 17px; height: 17px; }
+
+/* 极细分割线：苹果精致感的灵魂 */
+.hairline {
+  height: 1px;
+  background: var(--separator);
+}

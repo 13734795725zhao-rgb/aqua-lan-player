@@ -1,0 +1,94 @@
+body {
+  background: var(--shell-bg);
+}
+
+.titlebar {
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--title-h);
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  -webkit-app-region: drag;
+  z-index: 2;
+}
+
+/* ---------------- 交通灯 ---------------- */
+.lights {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  -webkit-app-region: no-drag;
+  width: 84px;
+}
+
+.light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  position: relative;
+  box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.18);
+  transition: filter 140ms var(--ease-out);
+}
+.light.close { background: #ff5f57; }
+.light.min { background: #febc2e; }
+.light.max { background: #28c840; }
+
+.light::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 9px;
+  line-height: 1;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transition: opacity 120ms var(--ease-out);
+}
+.light.close::after { content: "\00d7"; font-size: 11px; }
+.light.min::after { content: "\2212"; }
+.light.max::after { content: "\002b"; }
+
+.lights:hover .light::after { opacity: 1; }
+.light:active { filter: brightness(0.8); }
+
+/* 窗口失焦时交通灯转灰，和 macOS 一致 */
+.lights.inactive .light { background: #cfcfd2; }
+
+/* ---------------- 标题 ---------------- */
+.title {
+  flex: 1;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-dim);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 12px;
+}
+
+/* ---------------- 右侧工具 ---------------- */
+/* 顶栏收纳全部「系统级」控件：外观 / 侧边栏 / 画中画 / 全屏（底栏不再重复） */
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  -webkit-app-region: no-drag;
+  width: 124px;
+  justify-content: flex-end;
+}
+
+/* ---------------- 舞台 ---------------- */
+.stage {
+  position: absolute;
+  inset: var(--title-h) 0 0 0;
+  background: #000;
+  z-index: 1;
+}
+
+/* 全屏沉浸：视频铺满，标题栏被原生画面遮住 */
+body.chrome-hidden .titlebar { opacity: 0; pointer-events: none; }
+body.chrome-hidden .stage { inset: 0; }

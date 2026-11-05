@@ -1,0 +1,74 @@
+{
+  "name": "aqua-lan-player",
+  "productName": "AQUA 澜",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AQUA 澜 — 宿主嵌入式本地视频库播放器（libmpv 内核 + 苹果风格毛玻璃界面）",
+  "author": "AQUA",
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "probe": "node tools/probe-native.js",
+    "check": "node tools/check-renderer.js",
+    "icon": "pwsh -ExecutionPolicy Bypass -File tools/make-icon.ps1",
+    "dist": "electron-builder --win nsis --x64"
+  },
+  "devDependencies": {
+    "electron": "latest",
+    "electron-builder": "^25.1.8"
+  },
+  "dependencies": {
+    "koffi": "^2.11.0"
+  },
+  "build": {
+    "appId": "com.aqua.lan.player",
+    "productName": "AQUA 澜",
+    "copyright": "Copyright © 2026 AQUA",
+    "directories": {
+      "output": "dist",
+      "buildResources": "../build"
+    },
+    "files": [
+      "src/**/*",
+      "package.json",
+      "!**/*.map",
+      "!**/*.md"
+    ],
+    "extraResources": [
+      {
+        "from": "../bin",
+        "to": "bin",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "win": {
+      "icon": "icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "AQUA-${version}-Setup.${ext}"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "AQUA 澜",
+      "menuCategory": "AQUA",
+      "installerIcon": "icon.ico",
+      "uninstallerIcon": "icon.ico",
+      "installerHeaderIcon": "icon.ico",
+      "deleteAppDataOnUninstall": false,
+      "runAfterFinish": true
+    }
+  }
+}

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <title>controls</title>
+  <link rel="stylesheet" href="shared/base.css" />
+  <link rel="stylesheet" href="controls.css" />
+</head>
+<body>
+  <!--
+    苹果式排布：
+      底部一条全宽的「渐进式进度条」（静止时极细，靠近才变粗）；
+      上方悬着一条圆角胶囊（左侧辅助区 / 正中播控区 / 右侧系统区）。
+    整个窗口是透明的，只有胶囊和进度条有像素，其余地方能直接看到视频。
+  -->
+  <div class="controls" id="bar">
+
+    <!-- 进度条：静止 2px~4px，靠近变粗到 8px 并淡入滑块 -->
+    <div class="scrub" id="scrub">
+      <div class="scrub-line" id="scrubline">
+        <div class="scrub-fill" id="scrubfill"></div>
+      </div>
+      <div class="scrub-knob" id="scrubknob"></div>
+    </div>
+
+    <!-- 悬浮胶囊：内部用 1fr / auto / 1fr 三栏，保证播控区始终居中 -->
+    <div class="pill">
+      <!-- 左侧：音量（悬停展开）+ 时间码（点击切换剩余倒计时） -->
+      <div class="zone left">
+        <div class="volwrap" id="volwrap">
+          <button class="ctl" id="mute" title="静音"><span class="icon"></span></button>
+          <div class="slider vol" id="vol">
+            <div class="track"><div class="fill" id="volfill"></div></div>
+            <div class="knob" id="volknob"></div>
+          </div>
+        </div>
+        <button class="time" id="time" title="点击切换剩余时间">
+          <span id="t-elapsed">0:00</span><span class="t-sep">/</span><span id="t-total">0:00</span>
+        </button>
+      </div>
+
+      <!-- 正中：快退 10s / 播放暂停 / 快进 10s（按住可阶梯穿梭） -->
+      <div class="zone center">
+        <button class="ctl wing" id="back10" title="快退 10 秒（长按加速）"><span class="icon"></span></button>
+        <button class="ctl play" id="play" title="播放 / 暂停（空格）"><span class="icon"></span></button>
+        <button class="ctl wing" id="fwd10" title="快进 10 秒（长按加速）"><span class="icon"></span></button>
+      </div>
+
+      <!-- 右侧：倍速（系统级功能一律在顶栏，这里只留播放级） -->
+      <div class="zone right">
+        <button class="ctl speed" id="speed" title="播放速度"><span id="speed-text">1.0x</span></button>
+      </div>
+    </div>
+  </div>
+
+  <script src="shared/icons.js"></script>
+  <script src="shared/hotkeys.js"></script>
+  <script src="controls.js"></script>
+</body>
+</html>

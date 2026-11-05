@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="dark">
+<head>
+  <meta charset="utf-8" />
+  <title>input</title>
+  <link rel="stylesheet" href="shared/base.css" />
+  <link rel="stylesheet" href="glass.css" />
+</head>
+<body>
+  <!--
+    输入玻璃层：完全透明，盖在视频之上。
+    视频是原生子窗口，网页收不到它上面的鼠标，所以这一层专门负责
+    「鼠标一动就唤醒界面」「右侧边缘悬停唤出侧边栏」这类感知。
+  -->
+  <div class="hud">
+    <div class="osd" id="osd"></div>
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <script src="shared/icons.js"></script>
+  <script src="shared/hotkeys.js"></script>
+  <script src="glass.js"></script>
+</body>
+</html>
